@@ -1,48 +1,72 @@
-import { useState } from 'react'
+import { useEffect } from 'react';
 
-function AddContactForm({ onAdd }) {
-  const [name, setName] = useState('')
-  const [phone, setPhone] = useState('')
-  const [email, setEmail] = useState('')
-  const [phoneError, setPhoneError] = useState('')
-
+function AddContactForm({ 
+  onAdd, 
+  formData, 
+  setFormData, 
+  errorMessage, 
+  startTyping, 
+  validateError, 
+  clearError,
+  submitForm, 
+  resetForm, 
+  currentState,
+  showSuccess,
+  checkFormEmpty,
+  listEmpty
+}) {
+  
   const handlePhoneChange = (e) => {
-    const value = e.target.value
-    // Разрешаем только цифры и символ '+'
-    const regex = /^[0-9+]*$/
+    const value = e.target.value;
+    const regex = /^[0-9+]*$/;
     
     if (regex.test(value)) {
-      setPhone(value)
-      setPhoneError('')
+      setFormData({ ...formData, phone: value });
+      if (errorMessage) {
+        clearError();
+      }
+      startTyping();
     } else {
-      setPhoneError('Телефон может содержать только цифры и символ "+"')
+      validateError('Телефон может содержать только цифры и символ "+"');
     }
-  }
+  };
+
+  const handleNameChange = (e) => {
+    setFormData({ ...formData, name: e.target.value });
+    if (errorMessage && e.target.value) {
+      clearError();
+    }
+    startTyping();
+  };
+
+  const handleEmailChange = (e) => {
+    setFormData({ ...formData, email: e.target.value });
+    if (errorMessage && e.target.value) {
+      clearError();
+    }
+    startTyping();
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     
-    if (!name.trim() || !phone.trim() || !email.trim()) {
-      alert('Пожалуйста, заполните все поля')
-      return
-    }
-
-    if (phoneError) {
-      alert('Исправьте ошибку в номере телефона')
-      return
+    if (!formData.name.trim() || !formData.phone.trim() || !formData.email.trim()) {
+      validateError('Пожалуйста, заполните все поля');
+      return;
     }
 
     onAdd({
-      name: name.trim(),
-      phone: phone.trim(),
-      email: email.trim()
-    })
+      name: formData.name.trim(),
+      phone: formData.phone.trim(),
+      email: formData.email.trim()
+    });
+  };
 
-    setName('')
-    setPhone('')
-    setEmail('')
-    setPhoneError('')
-  }
+  useEffect(() => {
+    if (!formData.name && !formData.phone && !formData.email && currentState !== 'Контакт добавлен') {
+      checkFormEmpty();
+    }
+  }, [formData]);
 
   return (
     <div className="form-container">
@@ -54,10 +78,10 @@ function AddContactForm({ onAdd }) {
             id="name"
             type="text"
             placeholder="Введите имя"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={formData.name}
+            onChange={handleNameChange}
             className="form-input"
-            required
+            disabled={currentState === 'Контакт добавлен'}
           />
         </div>
         <div className="form-group">
@@ -66,12 +90,12 @@ function AddContactForm({ onAdd }) {
             id="phone"
             type="tel"
             placeholder="+79991234567"
-            value={phone}
+            value={formData.phone}
             onChange={handlePhoneChange}
-            className={`form-input ${phoneError ? 'error' : ''}`}
-            required
+            className={`form-input ${errorMessage ? 'error' : ''}`}
+            disabled={currentState === 'Контакт добавлен'}
           />
-          {phoneError && <span className="error-message">{phoneError}</span>}
+          {errorMessage && <span className="error-message">{errorMessage}</span>}
           <small className="input-hint">Формат: + и цифры (например: +79991234567)</small>
         </div>
         <div className="form-group">
@@ -80,22 +104,25 @@ function AddContactForm({ onAdd }) {
             id="email"
             type="email"
             placeholder="example@mail.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={formData.email}
+            onChange={handleEmailChange}
             className="form-input"
-            required
+            disabled={currentState === 'Контакт добавлен'}
           />
         </div>
         <button 
           type="submit" 
           className="btn btn-add"
-          disabled={!!phoneError}
+          disabled={!!errorMessage || currentState === 'Контакт добавлен'}
         >
           Добавить контакт
         </button>
       </form>
+      {showSuccess && (
+        <div className="success-message">✓ Контакт успешно добавлен!</div>
+      )}
     </div>
-  )
+  );
 }
 
-export default AddContactForm
+export default AddContactForm;

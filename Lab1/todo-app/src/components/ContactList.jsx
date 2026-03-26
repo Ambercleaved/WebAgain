@@ -1,13 +1,29 @@
-import ContactItem from './ContactItem'
+import ContactItem from './ContactItem';
 
-function ContactList({ contacts, onDelete }) {
+function ContactList({ contacts, onDelete, appState, search, clearSearch }) {
+  const handleDelete = (id) => {
+    onDelete(id);
+  };
+
   if (contacts.length === 0) {
+    if (appState === 'SEARCH_EMPTY') {
+      return (
+        <div className="empty-state">
+          <p>Контакты не найдены</p>
+          <p className="empty-sub">Попробуйте изменить параметры поиска</p>
+          <button onClick={clearSearch} className="btn-clear-search">
+            Очистить поиск
+          </button>
+        </div>
+      );
+    }
+    
     return (
       <div className="empty-state">
-        <p>Контакты не найдены</p>
-        <p className="empty-sub">Добавьте новый контакт или измените параметры поиска</p>
+        <p>Список контактов пуст</p>
+        <p className="empty-sub">Добавьте первый контакт с помощью формы выше</p>
       </div>
-    )
+    );
   }
 
   return (
@@ -18,12 +34,13 @@ function ContactList({ contacts, onDelete }) {
           <ContactItem 
             key={contact.id} 
             contact={contact} 
-            onDelete={onDelete}
+            onDelete={handleDelete}
+            appState={appState}
           />
         ))}
       </div>
     </div>
-  )
+  );
 }
 
-export default ContactList
+export default ContactList;
