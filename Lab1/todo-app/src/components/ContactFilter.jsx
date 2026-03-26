@@ -30,12 +30,12 @@ function ContactFilter({ filterText, onFilterChange, search, clearSearch, curren
       )}
       {currentState === 'Поиск активен' && filterText && (
         <div className="search-status success">
-          🔍 Найдены контакты по запросу "{filterText}"
+          Найдены контакты по запросу "{filterText}"
         </div>
       )}
       {currentState === 'Результатов нет' && filterText && (
         <div className="search-status empty">
-          ❌ Ничего не найдено по запросу "{filterText}"
+          Ничего не найдено по запросу "{filterText}"
         </div>
       )}
     </div>

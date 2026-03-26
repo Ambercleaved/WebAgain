@@ -29,32 +29,32 @@ function StateIndicator({ currentState }) {
   const getStateIcon = (state) => {
     switch (state) {
       case APP_STATES.IDLE:
-        return '⏸';
+        return '';
       case APP_STATES.FORM_EMPTY:
-        return '📝';
+        return '';
       case APP_STATES.FORM_FILLING:
-        return '✏️';
+        return '';
       case APP_STATES.FORM_ERROR:
-        return '⚠️';
+        return '';
       case APP_STATES.CONTACT_ADDED:
-        return '✅';
+        return '';
       case APP_STATES.CONTACT_DELETED:
-        return '🗑';
+        return '';
       case APP_STATES.SEARCH_ACTIVE:
-        return '🔍';
+        return '';
       case APP_STATES.SEARCH_EMPTY:
-        return '❌';
+        return '';
       case APP_STATES.LIST_EMPTY:
-        return '📭';
+        return '';
       default:
-        return '📱';
+        return '';
     }
   };
 
   return (
     <div className="state-indicator">
       <div className="state-header">
-        <h3>📊 Дискретно-событийная модель</h3>
+        <h3></h3>
         <p>Текущее состояние приложения:</p>
       </div>
       <div 

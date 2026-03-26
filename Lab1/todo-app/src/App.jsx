@@ -156,19 +156,19 @@ function App() {
           </div>
           {filteredContacts.length === 0 && filterText && (
             <div className="empty-state search-empty">
-              <p>🔍 По запросу "{filterText}" ничего не найдено</p>
+              <p>По запросу "{filterText}" ничего не найдено</p>
               <p className="empty-sub">Попробуйте изменить параметры поиска</p>
             </div>
           )}
           {filteredContacts.length === 0 && !filterText && contacts.length === 0 && (
             <div className="empty-state">
-              <p>📒 Список контактов пуст</p>
+              <p>Список контактов пуст</p>
               <p className="empty-sub">Добавьте первый контакт с помощью формы выше</p>
             </div>
           )}
           {filteredContacts.length === 0 && !filterText && contacts.length > 0 && (
             <div className="empty-state">
-              <p>📒 Контакты не отображаются</p>
+              <p>Контакты не отображаются</p>
               <p className="empty-sub">Все контакты скрыты поиском</p>
             </div>
           )}
