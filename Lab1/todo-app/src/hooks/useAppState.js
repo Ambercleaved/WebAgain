@@ -1,6 +1,6 @@
 import { useState, useReducer } from 'react';
 
-// Состояния приложения
+
 export const APP_STATES = {
   IDLE: 'Ожидание',
   FORM_EMPTY: 'Форма пуста',
@@ -13,7 +13,7 @@ export const APP_STATES = {
   LIST_EMPTY: 'Список контактов пуст'
 };
 
-// Типы событий
+
 const EVENTS = {
   START_TYPING: 'START_TYPING',
   VALIDATE_ERROR: 'VALIDATE_ERROR',
@@ -29,7 +29,7 @@ const EVENTS = {
   AFTER_ADD_RESET: 'AFTER_ADD_RESET'
 };
 
-// Редьюсер для переходов между состояниями
+
 const reducer = (state, action) => {
   console.log('Current state:', state, 'Action:', action.type, action.payload);
   
